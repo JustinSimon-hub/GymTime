@@ -1,0 +1,46 @@
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+
+# User settings
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+appsettings.json
+appsettings.*.json
+
+# Visual Studio
+.vs/
+
+# VS Code / Rider
+.vscode/
+.idea/
+
+# Publish folders
+publish/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Database files
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# OS generated
+.DS_Store
+Thumbs.db
