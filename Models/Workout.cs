@@ -6,6 +6,8 @@
         public int Reps { get; set; }
         public int Sets { get; set; }
         public int PersonalRecord { get; set; }
-        
+        public string Description { get; set; }
+
+
     }
 }

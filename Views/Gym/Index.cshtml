@@ -1,0 +1,39 @@
+﻿@*Create view for viewing diet and workout plans*@
+
+<h2>Diet Plans</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var diet in Model.Diets)
+        {
+            <tr>
+                <td>@diet.Name</td>
+                <td>@diet.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Workout Plans</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var workout in Model.Workouts)
+        {
+            <tr>
+                <td>@workout.WorkoutName </td>
+                <td>@workout.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
