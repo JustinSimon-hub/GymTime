@@ -39,7 +39,7 @@ namespace GymTime.Models
         public void UpdateDiet(Diet diet)
         {
              _connection.Execute("UPDATE Diets SET FoodName = @FoodName, Proteins = @Proteins, Carbohydrates = @Carbohydrates, Calories = @Calories WHERE Id = @Id",
-                new { Id = diet.Id, FoodName = diet.FoodName, Proteins = diet.Proteins, Carbohydrates = diet.Carbohyradates, Calories = diet.Calories });
+                new { Id = diet.Id, FoodName = diet.FoodName, Proteins = diet.Proteins, Carbohydrates = diet.Carbohydrates, Calories = diet.Calories });
         }
 
         public void UpdateWorkout(Workout id)
