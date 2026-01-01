@@ -1,0 +1,38 @@
+﻿@model GymTime.Models.Diet
+
+<h2>Update @Model.FoodName</h2>
+
+<form asp-action="UpdateDietToDatabase" asp-controller="Gym" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <div class="form-group">
+        <label asp-for="FoodName"></label>
+        <input asp-for="FoodName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Proteins"></label>
+        <input asp-for="Proteins" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fats"></label>
+        <input asp-for="Fats" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Carbohyradates"></label>
+        <input asp-for="Carbohyradates" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Calories"></label>
+        <input asp-for="Calories" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Update Diet
+    </button>
+
+</form>

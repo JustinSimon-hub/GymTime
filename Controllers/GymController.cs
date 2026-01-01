@@ -25,6 +25,23 @@ namespace GymTime.Controllers
             return View(diet);
 
         }
+
+        public IActionResult UpdateDiet(int id)
+        {
+            Diet diet = repo.GetDiet(id);
+            if (diet == null)
+            {
+                return View("DietNotFound");
+            }
+            return View(diet);  
+        }
+
+        [HttpPost]
+        public IActionResult UpdateDietToDatabase(Diet diet)
+        {
+            repo.UpdateDiet(diet);
+            return RedirectToAction("ViewDiet", new {id = diet.Id});
+        }
     }
 }
 
