@@ -42,6 +42,18 @@ namespace GymTime.Controllers
             repo.UpdateDiet(diet);
             return RedirectToAction("ViewDiet", new {id = diet.Id});
         }
+        
+        public IActionResult InsertDiet()
+        {
+            
+            return View();
+        }
+
+        public IActionResult InsertDietToDatabase(Diet DietToInsert)
+        {
+            repo.InsertDiet(DietToInsert);
+            return RedirectToAction("Index");
+        }
     }
 }
 

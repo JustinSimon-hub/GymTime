@@ -1,0 +1,31 @@
+﻿@model Diet 
+<form asp-action="InsertDietToDatabase" asp-controller="Gym" method="post">
+    <div class="form-group">
+        <label asp-for="FoodName"></label>
+        <input asp-for="FoodName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Proteins"></label>
+        <input asp-for="Proteins" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fats"></label>
+        <input asp-for="Fats" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Carbohydrates"></label>
+        <input asp-for="Carbohydrates" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Calories"></label>
+        <input asp-for="Calories" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Insert Diet
+    </button>
+</form>

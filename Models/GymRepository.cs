@@ -36,6 +36,18 @@ namespace GymTime.Models
            return _connection.Query<Workout>("SELECT * FROM Workouts");
         }
 
+        public void InsertDiet(Diet diet)
+        {
+           
+              _connection.Execute("INSERT INTO Diets (FoodName, Proteins, Carbohydrates, Calories, Fats) VALUES (@FoodName, @Proteins, @Carbohydrates, @Calories, @Fats)",
+                new { FoodName = diet.FoodName, Proteins = diet.Proteins, Carbohydrates = diet.Carbohydrates, Calories = diet.Calories, Fats = diet.Fats });
+        }
+
+        public void InsertWorkout(Workout workout)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateDiet(Diet diet)
         {
              _connection.Execute("UPDATE Diets SET FoodName = @FoodName, Proteins = @Proteins, Carbohydrates = @Carbohydrates, Calories = @Calories WHERE Id = @Id",

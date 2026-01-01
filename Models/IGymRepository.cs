@@ -10,6 +10,9 @@
         public void UpdateDiet(Diet id);
         public void UpdateWorkout(Workout id);
 
+        public void InsertDiet(Diet diet);  
+        public void InsertWorkout(Workout workout);
+
 
 
     }
