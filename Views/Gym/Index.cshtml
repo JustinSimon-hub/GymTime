@@ -1,24 +1,26 @@
 ﻿@model IEnumerable<GymTime.Models.Diet>
 
 <h2>Diet Plans</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var diet in Model)
-        {
-            <tr>
-                <td>@diet.FoodName</td>
-                <td>@diet.Calories</td>
-                <td>@diet.Proteins</td>
-                <td>@diet.Fats</td>
-                <td>@diet.Carbohyradates</td>
-            </tr>
-        }
 
-    </tbody>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Food name</th>
+        <th>Protien</th>
+        <th>Carbohyrdates</th>
+        <th>Calories</th>
+      
+    </tr>
+
+    @foreach (var diet in Model)
+    {
+        <tr>
+            <td><a href=/Gym/ViewDiet/@diet.Id>@diet.Id</a></td>
+            <td>@diet.FoodName</td>
+            <td>@diet.Proteins</td>
+            <td>@diet.Carbohyradates</td>
+            <td>@diet.Calories</td>
+        </tr>
+
+    }
 </table>

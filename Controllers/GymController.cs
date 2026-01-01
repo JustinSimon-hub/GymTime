@@ -17,6 +17,14 @@ namespace GymTime.Controllers
             var diets = repo.GetDiets();
             return View(diets);
         }
+
+        //Get /<controller>/ViewDiet/
+        public IActionResult ViewDiet(int id)
+        {
+            var diet = repo.GetDiet(id);
+            return View(diet);
+
+        }
     }
 }
 

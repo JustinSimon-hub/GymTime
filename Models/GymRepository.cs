@@ -13,9 +13,22 @@ namespace GymTime.Models
             _connection = connection;
         }
 
+        public Diet GetDiet(int id) 
+        {
+
+            return _connection.QuerySingle<Diet>("SELECT * FROM Diets WHERE Id = @id",
+               new { id = id });
+
+        }
+
         public IEnumerable<Diet> GetDiets()
         {
             return _connection.Query<Diet>("SELECT * FROM Diets");
+        }
+
+        public Workout GetWorkout(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Workout> GetWorkouts()
