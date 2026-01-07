@@ -13,6 +13,8 @@ namespace GymTime.Models
             _connection = connection;
         }
 
+        
+
         public Diet GetDiet(int id) 
         {
 
@@ -55,6 +57,21 @@ namespace GymTime.Models
         }
 
         public void UpdateWorkout(Workout id)
+        {
+            throw new NotImplementedException();
+        }
+
+
+   //Delete actions
+
+        public void DeleteDiet(int id)
+        {
+            _connection.Execute("DELETE FROM Diets WHERE Id = @id",
+                new { id = id });
+
+        }
+
+        public void DeleteWorkout(int id)
         {
             throw new NotImplementedException();
         }

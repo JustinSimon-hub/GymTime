@@ -32,3 +32,17 @@
         Update this food
     </a>
 </div>
+
+
+<div style="display: block; margin-top: 10px;">
+    <form asp-controller="Gym"
+          asp-action="DeleteDiet"
+          method="post">
+
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <button type="submit" class="btn btn-danger">
+            Delete this food
+        </button>
+    </form>
+</div>

@@ -54,6 +54,21 @@ namespace GymTime.Controllers
             repo.InsertDiet(DietToInsert);
             return RedirectToAction("Index");
         }
+
+        public IActionResult DeleteDiet(int id)
+        {
+
+            repo.DeleteDiet(id);
+            return RedirectToAction("Index");
+        }
+
+
+        public IActionResult DeleteWorkout()
+        {
+            throw new NotImplementedException();
+            //Awaiting Implemetation
+        }
+
     }
 }
 
