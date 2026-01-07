@@ -13,6 +13,9 @@
         public void InsertDiet(Diet diet);  
         public void InsertWorkout(Workout workout);
 
+        public void DeleteDiet(int id); 
+        public void DeleteWorkout(int id);
+
 
 
     }
