@@ -14,8 +14,12 @@ namespace GymTime.Controllers
         //Get /<controller>/ 
         public IActionResult Index()
         {
-            var diets = repo.GetDiets();
-            return View(diets);
+            var model = new GymViewModel
+            {
+                Diets = repo.GetDiets(),
+                Workouts = repo.GetWorkouts()
+            };
+            return View(model);
         }
 
         //Get /<controller>/ViewDiet/
@@ -25,6 +29,13 @@ namespace GymTime.Controllers
             return View(diet);
 
         }
+        public IActionResult ViewWorkout(int id)
+        {
+            var workout = repo.GetWorkout(id);
+            return View(workout);
+        }
+
+
 
         public IActionResult UpdateDiet(int id)
         {
@@ -36,13 +47,41 @@ namespace GymTime.Controllers
             return View(diet);  
         }
 
+
+
+        public IActionResult UpdateWorkout(int id)
+        {
+            var workout = repo.GetWorkout(id);
+            if (workout == null)
+            {
+                return View("WorkoutNotFound");
+            }
+
+            return View(workout);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult UpdateWorkoutToDatabase(Workout workout)
+        {
+            repo.UpdateWorkout(workout);
+            return RedirectToAction("ViewWorkout", new {id = workout.Id});
+        }
+
         [HttpPost]
         public IActionResult UpdateDietToDatabase(Diet diet)
         {
             repo.UpdateDiet(diet);
             return RedirectToAction("ViewDiet", new {id = diet.Id});
         }
-        
+
+
+        public IActionResult InsertWorkout()
+        {
+            return View();
+        }
+
         public IActionResult InsertDiet()
         {
             
@@ -54,6 +93,11 @@ namespace GymTime.Controllers
             repo.InsertDiet(DietToInsert);
             return RedirectToAction("Index");
         }
+        public IActionResult InsertWorkoutToDatabase(Workout WorkoutToInsert)
+        {
+            repo.InsertWorkout(WorkoutToInsert);
+            return RedirectToAction("Index");
+        }
 
         public IActionResult DeleteDiet(int id)
         {
@@ -63,11 +107,12 @@ namespace GymTime.Controllers
         }
 
 
-        public IActionResult DeleteWorkout()
+        public IActionResult DeleteWorkout(int id)
         {
-            throw new NotImplementedException();
-            //Awaiting Implemetation
-        }
+            repo.DeleteWorkout(id);
+            return RedirectToAction("Index");
+        }   
+        
 
     }
 }

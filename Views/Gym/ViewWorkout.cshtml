@@ -1,0 +1,31 @@
+﻿@model GymTime.Models.Workout
+
+<h2>@Model.WorkoutName</h2>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Reps</th>
+        <th>Sets</th>
+        <th>PR</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.WorkoutName</td>
+        <td>@Model.Reps</td>
+        <td>@Model.Sets</td>
+        <td>@Model.PersonalRecord</td>
+        <td>@Model.Description</td>
+    </tr>
+</table>
+
+<div>
+    <a asp-controller="Gym" asp-action="UpdateWorkout" asp-route-id="@Model.Id">Edit Workout</a> |
+    <a asp-controller="Gym" asp-action="DeleteWorkout" asp-route-id="@Model.Id"
+       onclick="return confirm('Are you sure you want to delete this workout?');">
+        Delete Workout
+    </a> |
+    <a asp-controller="Gym" asp-action="Workouts">Back to List</a>
+</div>

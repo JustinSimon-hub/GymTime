@@ -1,24 +1,22 @@
-﻿@model IEnumerable<GymTime.Models.Diet>
+﻿@model GymTime.Models.GymViewModel
 
 <h2>Diet Logger</h2>
+
 
 <div style="display: block">
     <a href="/Gym/InsertDiet/">Create a new food</a>
 </div>
 
-
 <table class="table">
     <tr>
         <th>ID</th>
-        <th>Food name</th>
-        <th>Protien</th>
+        <th>Food Name</th>
+        <th>Protein</th>
         <th>Fats</th>
-        <th>Carbohyrdates</th>
+        <th>Carbohydrates</th>
         <th>Calories</th>
-      
     </tr>
-
-    @foreach (var diet in Model)
+    @foreach (var diet in Model.Diets)
     {
         <tr>
             <td><a href=/Gym/ViewDiet/@diet.Id>@diet.Id</a></td>
@@ -28,6 +26,35 @@
             <td>@diet.Carbohydrates</td>
             <td>@diet.Calories</td>
         </tr>
+    }
+</table>
 
+<div style="display: block">
+    <a href="/Gym/InsertWorkout/">Create a new workout</a>
+</div>
+
+
+
+<h2>Workout Logger</h2>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Workout Name</th>
+        <th>Reps</th>
+        <th>Sets</th>
+        <th>Personal Record</th>
+        <th>Description</th>
+    </tr>
+    @foreach (var workout in Model.Workouts)
+    {
+        <tr>
+            <td><a href=/Gym/ViewWorkout/@workout.Id>@workout.Id</a></td>
+            <td>@workout.WorkoutName</td>
+            <td>@workout.Reps</td>
+            <td>@workout.Sets</td>
+            <td>@workout.PersonalRecord</td>
+            <td>@workout.Description</td>
+        </tr>
     }
 </table>

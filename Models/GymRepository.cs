@@ -30,7 +30,8 @@ namespace GymTime.Models
 
         public Workout GetWorkout(int id)
         {
-            throw new NotImplementedException();
+            return _connection.QuerySingle<Workout>("SELECT * FROM Workouts WHERE ID = @id",
+            new { id = id });
         }
 
         public IEnumerable<Workout> GetWorkouts()
@@ -47,7 +48,8 @@ namespace GymTime.Models
 
         public void InsertWorkout(Workout workout)
         {
-            throw new NotImplementedException();
+            _connection.Execute("INSERT INTO Workouts (WorkoutName, Reps, Sets, PersonalRecord, Description) VALUES (@WorkoutName, @Reps, @Sets, @PersonalRecord, @Description)",
+                new { WorkoutName = workout.WorkoutName, Reps = workout.Reps, Sets = workout.Sets, PersonalRecord = workout.PersonalRecord, Description = workout.Description }); 
         }
 
         public void UpdateDiet(Diet diet)
@@ -56,9 +58,10 @@ namespace GymTime.Models
                 new { Id = diet.Id, FoodName = diet.FoodName, Proteins = diet.Proteins, Carbohydrates = diet.Carbohydrates, Calories = diet.Calories });
         }
 
-        public void UpdateWorkout(Workout id)
+        public void UpdateWorkout(Workout workout)
         {
-            throw new NotImplementedException();
+            _connection.Execute("UPDATE Workouts SET WorkoutName = @WorkoutName, Reps = @Reps, Sets = @Sets, PersonalRecord = @PersonalRecord WHERE Id = @Id",
+                 new { WorkoutName = workout.WorkoutName, Reps = workout.Reps, Sets = workout.Sets, PersonalRecord = workout.PersonalRecord, Description = workout.Description });
         }
 
 
@@ -73,7 +76,8 @@ namespace GymTime.Models
 
         public void DeleteWorkout(int id)
         {
-            throw new NotImplementedException();
+            _connection.Execute("DELETE FROM Workouts WHERE Id = @id",
+              new { id = id });
         }
     }
 }
