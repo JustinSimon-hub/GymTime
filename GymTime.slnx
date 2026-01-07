@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../DietTesting/GymTesting.csproj" Id="c2ba530a-a2e3-478c-94dc-888546732a7e" />
+  <Project Path="../GymTesting/GymTesting.csproj" Id="f75c98a5-19e3-4ce8-865c-a7b0eff51f2a" />
   <Project Path="GymTime.csproj" />
 </Solution>
