@@ -11,6 +11,5 @@
         public int Carbohydrates { get; set; }
         public int Calories  { get; set; }
 
-
     }
 }

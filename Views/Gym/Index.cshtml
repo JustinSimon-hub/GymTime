@@ -2,6 +2,29 @@
 
 <h2>Diet Logger</h2>
 
+<!-- Graph Macro Tracker -->
+<div class="macro-tracker-container" style="text-align: center; margin: 30px 0;">
+    <h3>Daily Macro Tracker</h3>
+    <div style="position: relative; width: 400px; margin: 0 auto;">
+        <canvas id="heartChart" width="400" height="400"></canvas>      
+    </div>
+    <div class="macro-summary" style="margin-top: 20px;">
+        <div style="display: inline-block; margin: 0 15px;">
+            <span style="color: #ff6384; font-weight: bold;">●</span> Proteins: <strong id="totalProteins">0</strong>g
+        </div>
+        <div style="display: inline-block; margin: 0 15px;">
+            <span style="color: #36a2eb; font-weight: bold;">●</span> Carbs: <strong id="totalCarbs">0</strong>g
+        </div>
+        <div style="display: inline-block; margin: 0 15px;">
+            <span style="color: #ffce56; font-weight: bold;">●</span> Fats: <strong id="totalFats">0</strong>g
+        </div>
+        <div style="display: inline-block; margin: 0 15px;">
+            <span style="color: #4bc0c0; font-weight: bold;">●</span> Calories: <strong id="totalCalories">0</strong>kcal
+        </div>
+    </div>
+</div>
+
+<!--Diet tracker-->
 
 <div style="display: block">
     <a href="/Gym/InsertDiet/">Create a new food</a>
@@ -33,14 +56,13 @@
     <a href="/Gym/InsertWorkout/">Create a new workout</a>
 </div>
 
-
-
+<!--Workout tracking-->
 <h2>Workout Logger</h2>
 
 <table class="table">
     <tr>
         <th>ID</th>
-        <th>Workout Name</th>
+        <th>Workout Name</th>   
         <th>Reps</th>
         <th>Sets</th>
         <th>Personal Record</th>
@@ -58,3 +80,115 @@
         </tr>
     }
 </table>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <script>
+        // Calculate totals from server data
+        const diets = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Diets));
+        
+        function calculateMacros() {
+            let totalProteins = 0;
+            let totalFats = 0;
+            let totalCarbs = 0;
+            let totalCalories = 0;
+            
+            diets.forEach(diet => {
+                totalProteins += diet.proteins;
+                totalFats += diet.fats;
+                totalCarbs += diet.carbohydrates;
+                totalCalories += diet.calories;
+            });
+            
+            return { totalProteins, totalFats, totalCarbs, totalCalories };
+        }
+        
+        const macros = calculateMacros();
+        
+        // Updates summary displays
+        document.getElementById('totalProteins').textContent = macros.totalProteins;
+        document.getElementById('totalCarbs').textContent = macros.totalCarbs;
+        document.getElementById('totalFats').textContent = macros.totalFats;
+        document.getElementById('totalCalories').textContent = macros.totalCalories;
+        
+        // Creates doughnut chart
+        const ctx = document.getElementById('heartChart').getContext('2d');
+        
+        const heartChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Proteins', 'Carbohydrates', 'Fats'],
+                datasets: [{
+                    label: 'Macros (g)',
+                    data: [macros.totalProteins, macros.totalCarbs, macros.totalFats],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += context.parsed + 'g';
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                label += ' (' + percentage + '%)';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true
+                }
+            }
+        });
+        
+        // Real-time update function 
+        function updateMacroChart() {
+            fetch('/Gym/GetMacroData')
+                .then(response => response.json())
+                .then(data => {
+                    // Update chart data
+                    heartChart.data.datasets[0].data = [
+                        data.totalProteins,
+                        data.totalCarbs,
+                        data.totalFats
+                    ];
+                    heartChart.update('active');
+                    
+                    // Update summary displays
+                    document.getElementById('totalProteins').textContent = data.totalProteins;
+                    document.getElementById('totalCarbs').textContent = data.totalCarbs;
+                    document.getElementById('totalFats').textContent = data.totalFats;
+                    document.getElementById('totalCalories').textContent = data.totalCalories;
+                })
+                .catch(error => console.error('Error fetching macro data:', error));
+        }
+        
+        // Updates every second
+        setInterval(updateMacroChart, 1000);
+    </script>
+}

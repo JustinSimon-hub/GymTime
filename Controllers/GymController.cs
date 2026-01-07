@@ -22,6 +22,21 @@ namespace GymTime.Controllers
             return View(model);
         }
 
+        // API endpoint for real-time macro data
+        [HttpGet]
+        public IActionResult GetMacroData()
+        {
+            var diets = repo.GetDiets();
+            var macroData = new
+            {
+                totalProteins = diets.Sum(d => d.Proteins),
+                totalCarbs = diets.Sum(d => d.Carbohydrates),
+                totalFats = diets.Sum(d => d.Fats),
+                totalCalories = diets.Sum(d => d.Calories)
+            };
+            return Json(macroData);
+        }
+
         //Get /<controller>/ViewDiet/
         public IActionResult ViewDiet(int id)
         {
