@@ -11,4 +11,8 @@
     <PackageReference Include="MySql.Data" Version="9.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DietTesting\GymTesting.csproj" />
+  </ItemGroup>
+
 </Project>
