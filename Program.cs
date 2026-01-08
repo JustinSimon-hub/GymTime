@@ -18,6 +18,9 @@ builder.Services.AddScoped<IDbConnection>(sp =>
 // ✅ Register your repository
 builder.Services.AddScoped<IGymRepository, GymRepository>();
 
+//Neccesary for User accounting
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +36,9 @@ app.UseStaticFiles(); // ensures wwwroot files are served
 app.UseRouting();
 
 app.UseAuthorization();
+
+//Neccesary for User accounting
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
