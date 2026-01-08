@@ -17,6 +17,7 @@ builder.Services.AddScoped<IDbConnection>(sp =>
 
 // ✅ Register your repository
 builder.Services.AddScoped<IGymRepository, GymRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 //Neccesary for User accounting
 builder.Services.AddSession();

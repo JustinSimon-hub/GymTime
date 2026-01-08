@@ -45,7 +45,7 @@ namespace GymTime.Controllers
                 return View();
             }
 
-            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetInt32("UserId", user.ID);
             return RedirectToAction("Index", "Home");
         }
 
