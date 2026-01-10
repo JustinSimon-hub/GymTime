@@ -15,9 +15,9 @@ namespace GymTime.Models
         }
 
        public void Register( string email, string password)
-        {
-            var hash = BCrypt.Net.BCrypt.HashPassword(password);
-            _connection.Execute(@"INSERT INTO Users (Email, PasswordHash
+        { 
+           var hash = BCrypt.Net.BCrypt.HashPassword(password);
+            _connection.Execute(@"INSERT INTO Users (Email, PasswordHash)
                 VALUES (@Email, @PasswordHash)",
                 new { Email = email, PasswordHash = hash });
         }
@@ -34,5 +34,16 @@ namespace GymTime.Models
             return null;
 
         }
+
+
+        //Using to Account Controller to check existence
+        public User? GetByEmail(string email)
+        {
+            return _connection.QuerySingleOrDefault<User>(
+                "SELECT * FROM Users WHERE Email = @Email",
+                new { Email = email }
+            );
+        }
+
     }
 }

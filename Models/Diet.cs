@@ -4,7 +4,7 @@
     {
         //Primary Key
         public int Id { get; set; }
-
+        public int UserId { get; set; }
         public string FoodName { get; set; }
         public int Proteins { get; set; }
         public int Fats { get; set; }

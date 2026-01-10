@@ -7,25 +7,30 @@
         <label asp-for="WorkoutName"></label>
         <input asp-for="WorkoutName" class="form-control" />
     </div>
+
     <div class="form-group">
         <label asp-for="Reps"></label>
         <input asp-for="Reps" class="form-control" />
     </div>
+
     <div class="form-group">
         <label asp-for="Sets"></label>
         <input asp-for="Sets" class="form-control" />
     </div>
+
     <div class="form-group">
         <label asp-for="PersonalRecord"></label>
         <input asp-for="PersonalRecord" class="form-control" />
     </div>
+
     <div class="form-group">
         <label asp-for="Description"></label>
         <input asp-for="Description" class="form-control" />
     </div>
+
     <button type="submit" class="btn btn-primary">Add Workout</button>
 </form>
 
 <div>
-    <a asp-controller="Gym" asp-action="Workouts">Back to List</a>
+    <a asp-controller="Gym" asp-action="Index">Back to Dashboard</a>
 </div>

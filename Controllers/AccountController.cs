@@ -7,7 +7,7 @@ namespace GymTime.Controllers
     public class AccountController : Controller
     {
         private readonly UserRepository _users;
-
+        
         public AccountController(UserRepository users)
         {
             _users = users;
@@ -23,6 +23,14 @@ namespace GymTime.Controllers
         [HttpPost]
         public IActionResult Register(string email, string password)
         {
+            // Check if email already exists
+            var existingUser = _users.GetByEmail(email);
+            if (existingUser != null)
+            {
+                ViewBag.Error = "Email is already registered.";
+                return View();
+            }
+
             _users.Register(email, password);
             return RedirectToAction("Login");
         }

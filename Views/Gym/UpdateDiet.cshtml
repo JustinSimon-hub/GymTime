@@ -4,7 +4,10 @@
 
 <form asp-action="UpdateDietToDatabase" asp-controller="Gym" method="post">
 
+    <!-- Required for update -->
     <input asp-for="Id" type="hidden" />
+
+    <!-- UserId stays server-side only -->
 
     <div class="form-group">
         <label asp-for="FoodName"></label>

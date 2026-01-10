@@ -18,5 +18,17 @@
 
 
 
+
+        // Diets user props 
+        IEnumerable<Diet> GetDietsByUser(int userId);
+        Diet? GetDietByUser(int id, int userId);
+        void DeleteDietByUser(int id, int userId);
+
+        // Workouts user props 
+        IEnumerable<Workout> GetWorkoutsByUser(int userId);
+        Workout? GetWorkoutByUser(int id, int userId);
+        void DeleteWorkoutByUser(int id, int userId);
+
+
     }
 }
