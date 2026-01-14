@@ -1,9 +1,11 @@
 ﻿using GymTime.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using GymTime.Controllers.Filters;
 
 namespace GymTime.Controllers
 {
+    [AuthorizeUser]  // 👈 Protects entire controller with ONE attribute
     public class GymController : Controller
     {
         private readonly IGymRepository repo;
@@ -13,19 +15,16 @@ namespace GymTime.Controllers
             this.repo = repo;
         }
 
-        // Helper to get current user ID from session
-        private int? CurrentUserId => HttpContext.Session.GetInt32("UserId");
+        // Helper to get current user ID from session (now guaranteed to exist)
+        private int CurrentUserId => HttpContext.Session.GetInt32("UserId")!.Value;
 
         // GET /Gym/
         public IActionResult Index()
         {
-            if (CurrentUserId == null)
-                return RedirectToAction("Login", "Account");
-
             var model = new GymViewModel
             {
-                Diets = repo.GetDietsByUser(CurrentUserId.Value),
-                Workouts = repo.GetWorkoutsByUser(CurrentUserId.Value)
+                Diets = repo.GetDietsByUser(CurrentUserId),
+                Workouts = repo.GetWorkoutsByUser(CurrentUserId)
             };
             return View(model);
         }
@@ -34,10 +33,7 @@ namespace GymTime.Controllers
         [HttpGet]
         public IActionResult GetMacroData()
         {
-            if (CurrentUserId == null)
-                return Unauthorized();
-
-            var diets = repo.GetDietsByUser(CurrentUserId.Value);
+            var diets = repo.GetDietsByUser(CurrentUserId);
             var macroData = new
             {
                 totalProteins = diets.Sum(d => d.Proteins),
@@ -51,39 +47,26 @@ namespace GymTime.Controllers
         // GET /Gym/ViewDiet/5
         public IActionResult ViewDiet(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            var diet = repo.GetDietByUser(id, userId.Value);
+                var diet = repo.GetDietByUser(id, CurrentUserId);
             if (diet == null)
-                return Unauthorized();
+                return NotFound();
 
             return View(diet);
         }
 
-
         // GET /Gym/ViewWorkout/5
         public IActionResult ViewWorkout(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            var workout = repo.GetWorkoutByUser(id, userId.Value);
+            var workout = repo.GetWorkoutByUser(id, CurrentUserId);
             if (workout == null)
-                return Unauthorized();
+                return NotFound();
 
             return View(workout);
         }
 
-
         public IActionResult UpdateDiet(int id)
         {
-            if (CurrentUserId == null)
-                return RedirectToAction("Login", "Account");
-
-            var diet = repo.GetDietByUser(id, CurrentUserId.Value);
+            var diet = repo.GetDietByUser(id, CurrentUserId);
             if (diet == null)
                 return View("DietNotFound");
 
@@ -92,112 +75,67 @@ namespace GymTime.Controllers
 
         public IActionResult UpdateWorkout(int id)
         {
-            if (CurrentUserId == null)
-                return RedirectToAction("Login", "Account");
-
-            var workout = repo.GetWorkoutByUser(id, CurrentUserId.Value);
+            var workout = repo.GetWorkoutByUser(id, CurrentUserId);
             if (workout == null)
                 return View("WorkoutNotFound");
 
             return View(workout);
         }
 
-
         [HttpPost]
         public IActionResult UpdateWorkoutToDatabase(Workout workout)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            workout.UserId = userId.Value;
-
+            workout.UserId = CurrentUserId;
             repo.UpdateWorkout(workout);
             return RedirectToAction("Index");
         }
 
-
         [HttpPost]
         public IActionResult UpdateDietToDatabase(Diet diet)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            diet.UserId = userId.Value;
-
+            diet.UserId = CurrentUserId;
             repo.UpdateDiet(diet);
             return RedirectToAction("Index");
         }
 
-
         public IActionResult InsertWorkout()
         {
-            if (CurrentUserId == null)
-                return RedirectToAction("Login", "Account");
-
             return View();
         }
 
         public IActionResult InsertDiet()
         {
-            if (CurrentUserId == null)
-                return RedirectToAction("Login", "Account");
-
             return View();
         }
 
         [HttpPost]
         public IActionResult InsertDietToDatabase(Diet diet)
         {
-            var currentUserId = HttpContext.Session.GetInt32("UserId");
-            if (currentUserId == null)
-                return RedirectToAction("Login", "Account");
-
-            diet.UserId = currentUserId.Value;
-
+            diet.UserId = CurrentUserId;
             repo.InsertDiet(diet);
-
             return RedirectToAction("Index");
         }
-
 
         [HttpPost]
         public IActionResult InsertWorkoutToDatabase(Workout workout)
         {
-            var currentUserId = HttpContext.Session.GetInt32("UserId");
-            if (currentUserId == null)
-                return RedirectToAction("Login", "Account");
-
-            workout.UserId = currentUserId.Value;
-
+            workout.UserId = CurrentUserId;
             repo.InsertWorkout(workout);
-
             return RedirectToAction("Index");
         }
-
 
         [HttpPost]
         public IActionResult DeleteDiet(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            repo.DeleteDietByUser(id, userId.Value);
+            repo.DeleteDietByUser(id, CurrentUserId);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult DeleteWorkout(int id)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "Account");
-
-            repo.DeleteWorkoutByUser(id, userId.Value);
+            repo.DeleteWorkoutByUser(id, CurrentUserId);
             return RedirectToAction("Index");
         }
-
     }
 }
