@@ -1,32 +1,44 @@
-﻿@model Diet
+﻿@model GymTime.Models.Data_Transfer_Object.DietDto
 
-<form asp-action="InsertDietToDatabase" asp-controller="Gym" method="post">
+<h2>Add New Food Entry</h2>
+
+<form asp-action="InsertDietToDatabase" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
     <div class="form-group">
         <label asp-for="FoodName"></label>
         <input asp-for="FoodName" class="form-control" />
+        <span asp-validation-for="FoodName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Proteins"></label>
-        <input asp-for="Proteins" class="form-control" />
-    </div>
+            <input asp-for="Proteins" class="form-control" type="number" />
+            <span asp-validation-for="Proteins" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
+        <div class="form-group">
         <label asp-for="Fats"></label>
-        <input asp-for="Fats" class="form-control" />
+        <input asp-for="Fats" class="form-control" type="number" />
+        <span asp-validation-for="Fats" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Carbohydrates"></label>
-        <input asp-for="Carbohydrates" class="form-control" />
+        <input asp-for="Carbohydrates" class="form-control" type="number" />
+        <span asp-validation-for="Carbohydrates" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Calories"></label>
-        <input asp-for="Calories" class="form-control" />
+        <input asp-for="Calories" class="form-control" type="number" />
+        <span asp-validation-for="Calories" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-        Insert Diet
-    </button>
+    <button type="submit" class="btn btn-primary">Add Food</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

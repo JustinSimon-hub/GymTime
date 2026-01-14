@@ -1,11 +1,13 @@
 ﻿using GymTime.Models;
+using GymTime.Models.Data_Transfer_Object;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using GymTime.Controllers.Filters;
+using GymTime.Models.Data_Transfer_Object;
 
 namespace GymTime.Controllers
 {
-    [AuthorizeUser]  // 👈 Protects entire controller with ONE attribute
+    [AuthorizeUser]
     public class GymController : Controller
     {
         private readonly IGymRepository repo;
@@ -83,17 +85,50 @@ namespace GymTime.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateWorkoutToDatabase(Workout workout)
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateWorkoutToDatabase(int id, WorkoutDto workoutDto)
         {
-            workout.UserId = CurrentUserId;
+            if (!ModelState.IsValid)
+            {
+                //Using workoutDto as the model in user formm for this view
+                return View("UpdateWorkout", workoutDto);
+            }
+
+            var workout = repo.GetWorkoutByUser(id, CurrentUserId);
+            if (workout == null)
+                return NotFound();
+
+            // Map DTO to entity
+            workout.WorkoutName = workoutDto.WorkoutName;
+            workout.Reps = workoutDto.Reps;
+            workout.Sets = workoutDto.Sets;
+            workout.PersonalRecord = workoutDto.PersonalRecord;
+            workout.Description = workoutDto.Description ?? string.Empty;
+
             repo.UpdateWorkout(workout);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult UpdateDietToDatabase(Diet diet)
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateDietToDatabase(int id, DietDto dietDto)
         {
-            diet.UserId = CurrentUserId;
+            if (!ModelState.IsValid)
+            {
+                return View("UpdateDiet", dietDto);
+            }
+
+            var diet = repo.GetDietByUser(id, CurrentUserId);
+            if (diet == null)
+                return NotFound();
+
+            // Map DTO to entity
+            diet.FoodName = dietDto.FoodName;
+            diet.Proteins = dietDto.Proteins;
+            diet.Fats = dietDto.Fats;
+            diet.Carbohydrates = dietDto.Carbohydrates;
+            diet.Calories = dietDto.Calories;
+
             repo.UpdateDiet(diet);
             return RedirectToAction("Index");
         }
@@ -109,22 +144,53 @@ namespace GymTime.Controllers
         }
 
         [HttpPost]
-        public IActionResult InsertDietToDatabase(Diet diet)
+        [ValidateAntiForgeryToken]
+        public IActionResult InsertDietToDatabase(DietDto dietDto)
         {
-            diet.UserId = CurrentUserId;
+            if (!ModelState.IsValid)
+            {
+                return View("InsertDiet", dietDto);
+            }
+
+            var diet = new Diet
+            {
+                UserId = CurrentUserId,
+                FoodName = dietDto.FoodName,
+                Proteins = dietDto.Proteins,
+                Fats = dietDto.Fats,
+                Carbohydrates = dietDto.Carbohydrates,
+                Calories = dietDto.Calories
+            };
+
             repo.InsertDiet(diet);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult InsertWorkoutToDatabase(Workout workout)
+        [ValidateAntiForgeryToken]
+        public IActionResult InsertWorkoutToDatabase(WorkoutDto workoutDto)
         {
-            workout.UserId = CurrentUserId;
+            if (!ModelState.IsValid)
+            {
+                return View("InsertWorkout", workoutDto);
+            }
+
+            var workout = new Workout
+            {
+                UserId = CurrentUserId,
+                WorkoutName = workoutDto.WorkoutName,
+                Reps = workoutDto.Reps,
+                Sets = workoutDto.Sets,
+                PersonalRecord = workoutDto.PersonalRecord,
+                Description = workoutDto.Description ?? string.Empty
+            };
+
             repo.InsertWorkout(workout);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteDiet(int id)
         {
             repo.DeleteDietByUser(id, CurrentUserId);
@@ -132,6 +198,7 @@ namespace GymTime.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteWorkout(int id)
         {
             repo.DeleteWorkoutByUser(id, CurrentUserId);
