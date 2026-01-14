@@ -72,7 +72,18 @@ namespace GymTime.Controllers
             if (diet == null)
                 return View("DietNotFound");
 
-            return View(diet);
+            // Map entity to DTO
+            var dietDto = new DietDto
+            {
+                Id = diet.Id,
+                FoodName = diet.FoodName,
+                Proteins = diet.Proteins,
+                Fats = diet.Fats,
+                Carbohydrates = diet.Carbohydrates,
+                Calories = diet.Calories
+            };
+
+            return View(dietDto);
         }
 
         public IActionResult UpdateWorkout(int id)
@@ -81,7 +92,18 @@ namespace GymTime.Controllers
             if (workout == null)
                 return View("WorkoutNotFound");
 
-            return View(workout);
+            // Map entity to DTO
+            var workoutDto = new WorkoutDto
+            {
+                Id = workout.Id,
+                WorkoutName = workout.WorkoutName,
+                Reps = workout.Reps,
+                Sets = workout.Sets,
+                PersonalRecord = workout.PersonalRecord,
+                Description = workout.Description
+            };
+
+            return View(workoutDto);
         }
 
         [HttpPost]

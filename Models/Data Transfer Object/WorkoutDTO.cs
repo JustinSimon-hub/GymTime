@@ -4,6 +4,9 @@ namespace GymTime.Models.Data_Transfer_Object
 {
     public class WorkoutDto
     {
+        //Only neccesary for the update actions
+        public int Id { get; set; }  
+
         [Required(ErrorMessage = "Workout name is required")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Workout name must be between 2 and 100 characters")]
         [Display(Name = "Workout Name")]

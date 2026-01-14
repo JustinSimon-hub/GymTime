@@ -1,44 +1,45 @@
-﻿@model GymTime.Models.Workout
+﻿@model GymTime.Models.Data_Transfer_Object.WorkoutDto
 
 <h2>Edit Workout</h2>
 
-<form asp-controller="Gym" asp-action="UpdateWorkoutToDatabase" method="post">
-
-    <!-- Required -->
-    <input type="hidden" asp-for="Id" />
-
-    <!-- UserId intentionally NOT in the form -->
+<form asp-action="UpdateWorkoutToDatabase" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
         <label asp-for="WorkoutName"></label>
         <input asp-for="WorkoutName" class="form-control" />
+        <span asp-validation-for="WorkoutName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Reps"></label>
-        <input asp-for="Reps" class="form-control" />
+        <input asp-for="Reps" class="form-control" type="number" />
+        <span asp-validation-for="Reps" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Sets"></label>
-        <input asp-for="Sets" class="form-control" />
+        <input asp-for="Sets" class="form-control" type="number" />
+        <span asp-validation-for="Sets" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="PersonalRecord"></label>
-        <input asp-for="PersonalRecord" class="form-control" />
+        <input asp-for="PersonalRecord" class="form-control" type="number" />
+        <span asp-validation-for="PersonalRecord" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Description"></label>
-        <input asp-for="Description" class="form-control" />
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">
-        Update Workout
-    </button>
+    <button type="submit" class="btn btn-success">Update Workout</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 
-<div>
-    <a asp-controller="Gym" asp-action="Index">Back to Dashboard</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+        
