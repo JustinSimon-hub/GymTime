@@ -1,11 +1,26 @@
 ﻿using GymTime.Models;
 using System.Data;
 using MySql.Data.MySqlClient;
+using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Swagger implemetation 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => 
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "GymTime API",
+        Version = "v1",
+        Description = "An ASP.NET Core Web API for managing gym workouts and diets."
+    });
+});
+
 
 // ✅ Register IDbConnection for DI
 builder.Services.AddScoped<IDbConnection>(sp =>
