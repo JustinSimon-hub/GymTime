@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => 
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
-    {
+    { 
         Version = "v1",
         Title = "GymTime API",
         Description = "An ASP.NET Core Web API for managing gym workouts and diets.",
@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     policy.AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader());
-};
+});
 
 
 
