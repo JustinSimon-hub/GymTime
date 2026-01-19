@@ -56,36 +56,34 @@ namespace GymTime.ApiControllers
             {
                 return BadRequest(new
                 {
-                    message = "Invalid workout data.",
-                    errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
-
+                    message = "Invalid workout data",
+                    errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))
                 });
-                
-
-                var workout = new Workout
-                {
-                    UserId = userId,
-                    WorkoutName = workoutDto.WorkoutName,
-                    Reps = workoutDto.Reps,
-                    Sets = workoutDto.Sets,
-                    PersonalRecord = workoutDto.PersonalRecord,
-                    Description = workoutDto.Description ?? string.Empty
-                };
-
-                _repository.InsertWorkout(workout);
-                return CreatedAtAction(
-                    nameof(GetWorkoutByUser),
-                    new { id = workout.Id, userId = userId }, 
-                    workout);
-
             }
 
+            var workout = new Workout
+            {
+                UserId = userId,
+                WorkoutName = workoutDto.WorkoutName,
+                Reps = workoutDto.Reps,
+                Sets = workoutDto.Sets,
+                PersonalRecord = workoutDto.PersonalRecord,
+                Description = workoutDto.Description ?? string.Empty
+            };
 
+            _repository.InsertWorkout(workout);
 
-
-
-          
+            return CreatedAtAction(
+                nameof(GetWorkoutByUser),
+                new { id = workout.Id, userId = userId },
+                workout);
         }
+
+
+
+
+
+    }
 
 
 
