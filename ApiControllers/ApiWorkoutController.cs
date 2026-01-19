@@ -20,9 +20,9 @@ namespace GymTime.ApiControllers
         [HttpGet("user/{userId}")]
         [ProducesResponseType(typeof(IEnumerable<Workout>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Workout>> GetWorkoutsByUser(int userId) // ✅ Fixed: removed 'int id'
+        public ActionResult<IEnumerable<Workout>> GetWorkoutsByUser(int userId) 
         {
-            var workouts = _repository.GetWorkoutsByUser(0, userId); // ✅ Fixed: only pass userId
+            var workouts = _repository.GetWorkoutsByUser(userId); 
             if (!workouts.Any())
             {
                 return NotFound(new { message = "No workouts found for the specified user.", userId });
@@ -34,7 +34,7 @@ namespace GymTime.ApiControllers
         [HttpGet("{id}/user/{userId}")]
         [ProducesResponseType(typeof(Workout), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Workout> GetWorkoutByUser(int id, int userId) // ✅ Fixed: return type
+        public ActionResult<Workout> GetWorkoutByUser(int id, int userId) 
         {
             var workout = _repository.GetWorkoutByUser(id, userId);
             if (workout == null)
@@ -103,19 +103,19 @@ namespace GymTime.ApiControllers
             existingWorkout.Reps = workoutDto.Reps;
             existingWorkout.Sets = workoutDto.Sets;
             existingWorkout.PersonalRecord = workoutDto.PersonalRecord;
-            existingWorkout.Description = workoutDto.Description ?? string.Empty; // ✅ Fixed: added null check
+            existingWorkout.Description = workoutDto.Description ?? string.Empty; 
 
             _repository.UpdateWorkout(existingWorkout);
             return NoContent();
         }
 
         // Delete workout gateway
-        [HttpDelete("{id}/user/{userId}")] // ✅ Fixed: corrected route syntax
+        [HttpDelete("{id}/user/{userId}")] 
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult DeleteWorkout(int id, int userId) // ✅ Fixed: removed WorkoutDto parameter
+        public IActionResult DeleteWorkout(int id, int userId) 
         {
-            var existingWorkout = _repository.GetWorkoutByUser(id, userId); // ✅ Fixed: use singular method
+            var existingWorkout = _repository.GetWorkoutByUser(id, userId); 
             if (existingWorkout == null)
             {
                 return NotFound(new { message = "Workout entry not found.", workoutId = id, userId });
@@ -130,7 +130,7 @@ namespace GymTime.ApiControllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<object> GetWorkoutStats(int userId)
         {
-            var workouts = _repository.GetWorkoutsByUser(0, userId).ToList();
+            var workouts = _repository.GetWorkoutsByUser(userId).ToList();
             if (!workouts.Any())
             {
                 return Ok(new { message = "No workout data available", userId });
@@ -157,14 +157,13 @@ namespace GymTime.ApiControllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<object> GetPersonalRecords(int userId)
         {
-            var workouts = _repository.GetWorkoutsByUser(0, userId).ToList();
+            var workouts = _repository.GetWorkoutsByUser( userId).ToList();
 
             if (!workouts.Any())
             {
                 return Ok(new { message = "No workout records available", userId });
             }
 
-            // ✅ Fixed: Added complete implementation
             var records = workouts
                 .GroupBy(w => w.WorkoutName)
                 .Select(g => new
