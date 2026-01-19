@@ -25,7 +25,7 @@
         void DeleteDietByUser(int id, int userId);
 
         // Workouts user props 
-        IEnumerable<Workout> GetWorkoutsByUser(int userId);
+        IEnumerable<Workout> GetWorkoutsByUser(int id, int userId);
         Workout? GetWorkoutByUser(int id, int userId);
         void DeleteWorkoutByUser(int id, int userId);
 
