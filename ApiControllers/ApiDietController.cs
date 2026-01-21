@@ -10,7 +10,7 @@ using Xunit.Sdk;
 
 namespace GymTime.ApiControllers
 {
-    //Check Json web token for security
+    //Allows access and checks jwt tokens, neccesary
     [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]

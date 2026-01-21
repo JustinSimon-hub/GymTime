@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymTime.ApiControllers
 {
+    //Allows access and checks jwt tokens, neccesary
     [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
