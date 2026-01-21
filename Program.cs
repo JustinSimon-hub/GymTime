@@ -1,20 +1,46 @@
 ﻿using GymTime.Models;
-using System.Data;
+using GymTime.Models.ApiAuth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using MySql.Data.MySqlClient;
-using Microsoft.OpenApi;   
-
+using System.Data;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//Swagger/Open Api support
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => 
+//  Add JWT Authentication
+builder.Services.AddAuthentication(options =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
-    { 
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
+});
+
+builder.Services.AddAuthorization();
+
+// Swagger/OpenAPI support with JWT
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
         Version = "v1",
         Title = "GymTime API",
         Description = "An ASP.NET Core Web API for managing gym workouts and diets.",
@@ -24,20 +50,31 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://github.com/JustinSimon-hub?tab=repositories")
         }
     });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+
+    // Enable annotations
+    options.EnableAnnotations();
 });
 
-//Adding Cors for api accessing from users
+// Adding CORS for API accessing from users
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
-    policy.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 });
 
-
-
-//  Register IDbConnection for DI
+// Register IDbConnection for DI
 builder.Services.AddScoped<IDbConnection>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
@@ -45,25 +82,27 @@ builder.Services.AddScoped<IDbConnection>(sp =>
     return new MySqlConnection(connectionString);
 });
 
-// Register your repository
+// Register repositories and services
 builder.Services.AddScoped<IGymRepository, GymRepository>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<JwtServices>();
 
-//Neccesary for User accounting
+// Necessary for User accounting (web-based session)
 builder.Services.AddSession();
 
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 
-    // ✅ Enable Swagger in Development
+    // Enable Swagger in Development
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "GymTime API v1");
-        options.RoutePrefix = "api-docs"; // Access at: https://localhost:7000/api-docs
+        options.RoutePrefix = "api-docs";
         options.DocumentTitle = "GymTime API Documentation";
         options.DisplayRequestDuration();
     });
@@ -74,18 +113,19 @@ else
     app.UseHsts();
 }
 
-
-
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // ensures wwwroot files are served
+app.UseStaticFiles();
 
 app.UseRouting();
-//cors
+
+// CORS
 app.UseCors("AllowAll");
 
+//  Authentication & Authorization (ORDER MATTERS!)
+app.UseAuthentication();
 app.UseAuthorization();
 
-//Neccesary for User accounting
+// Session for web-based controllers
 app.UseSession();
 
 app.MapControllerRoute(

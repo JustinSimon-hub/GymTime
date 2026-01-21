@@ -1,5 +1,6 @@
 ﻿using GymTime.Models;
 using GymTime.Models.Data_Transfer_Object;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Mozilla;
 using System.Data.Odbc;
@@ -9,6 +10,8 @@ using Xunit.Sdk;
 
 namespace GymTime.ApiControllers
 {
+    //Check Json web token for security
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     [Produces("application/json")]

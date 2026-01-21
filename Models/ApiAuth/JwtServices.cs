@@ -8,14 +8,14 @@ using System.Formats.Cbor;
 
 namespace GymTime.Models.ApiAuth
 {
-    public class JwtAuthorization
+    public class JwtServices
     {
         private readonly IConfiguration _configuration;
-        public JwtAuthorization(IConfiguration configuration)
+        public JwtServices(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
+        //Create token, validate token for access to gateways
         public string GenerateToken(int userId, string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
@@ -41,6 +41,7 @@ namespace GymTime.Models.ApiAuth
         public int? ValidateToken(string token)
         {
             if (string.IsNullOrEmpty(token))
+                //reject empty tokens
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
