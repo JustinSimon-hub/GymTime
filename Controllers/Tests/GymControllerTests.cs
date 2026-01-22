@@ -328,3 +328,5 @@ namespace GymTesting
         public bool TryGetValue(string key, out byte[]? value) => _sessionStorage.TryGetValue(key, out value);
     }
 }
+
+

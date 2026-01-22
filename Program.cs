@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//  Add JWT Authentication
+// Add JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,9 +60,6 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-
-    // Enable annotations
-    options.EnableAnnotations();
 });
 
 // Adding CORS for API accessing from users
@@ -121,7 +118,7 @@ app.UseRouting();
 // CORS
 app.UseCors("AllowAll");
 
-//  Authentication & Authorization (ORDER MATTERS!)
+// Authentication & Authorization (ORDER MATTERS!)
 app.UseAuthentication();
 app.UseAuthorization();
 

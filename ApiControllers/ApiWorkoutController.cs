@@ -2,14 +2,14 @@
 using GymTime.Models.Data_Transfer_Object;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GymTime.ApiControllers
 {
-    //Allows access and checks jwt tokens, neccesary
-    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     [Produces("application/json")]
+    [Authorize] // ✅ Require authentication for ALL endpoints
     public class ApiWorkoutController : ControllerBase
     {
         private readonly IGymRepository _repository;
@@ -19,13 +19,33 @@ namespace GymTime.ApiControllers
             _repository = repository;
         }
 
+        // ✅ Helper method to get authenticated user ID
+        private int GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return int.Parse(userIdClaim!);
+        }
+
+        // ✅ Helper method to validate user access
+        private bool ValidateUserAccess(int userId)
+        {
+            return GetAuthenticatedUserId() == userId;
+        }
+
         // This will return all workout data for a specific user
         [HttpGet("user/{userId}")]
         [ProducesResponseType(typeof(IEnumerable<Workout>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Workout>> GetWorkoutsByUser(int userId) 
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public ActionResult<IEnumerable<Workout>> GetWorkoutsByUser(int userId)
         {
-            var workouts = _repository.GetWorkoutsByUser(userId); 
+            // ✅ Ensure user can only access their own data
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
+            var workouts = _repository.GetWorkoutsByUser(userId);
             if (!workouts.Any())
             {
                 return NotFound(new { message = "No workouts found for the specified user.", userId });
@@ -37,8 +57,15 @@ namespace GymTime.ApiControllers
         [HttpGet("{id}/user/{userId}")]
         [ProducesResponseType(typeof(Workout), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Workout> GetWorkoutByUser(int id, int userId) 
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public ActionResult<Workout> GetWorkoutByUser(int id, int userId)
         {
+            // ✅ Ensure user can only access their own data
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
             var workout = _repository.GetWorkoutByUser(id, userId);
             if (workout == null)
             {
@@ -51,8 +78,15 @@ namespace GymTime.ApiControllers
         [HttpPost("user/{userId}")]
         [ProducesResponseType(typeof(Workout), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public ActionResult<Workout> CreateWorkout(int userId, [FromBody] WorkoutDto workoutDto)
         {
+            // ✅ Ensure user can only create data for themselves
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(new
@@ -81,12 +115,19 @@ namespace GymTime.ApiControllers
         }
 
         // Gateway for updating workout
-        [HttpPut("{id}/user/{userId}")] // ✅ Fixed: added {id}
+        [HttpPut("{id}/user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult UpdateWorkout(int id, int userId, [FromBody] WorkoutDto workoutDto)
         {
+            // ✅ Ensure user can only update their own data
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(new
@@ -106,19 +147,26 @@ namespace GymTime.ApiControllers
             existingWorkout.Reps = workoutDto.Reps;
             existingWorkout.Sets = workoutDto.Sets;
             existingWorkout.PersonalRecord = workoutDto.PersonalRecord;
-            existingWorkout.Description = workoutDto.Description ?? string.Empty; 
+            existingWorkout.Description = workoutDto.Description ?? string.Empty;
 
             _repository.UpdateWorkout(existingWorkout);
             return NoContent();
         }
 
         // Delete workout gateway
-        [HttpDelete("{id}/user/{userId}")] 
+        [HttpDelete("{id}/user/{userId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult DeleteWorkout(int id, int userId) 
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public IActionResult DeleteWorkout(int id, int userId)
         {
-            var existingWorkout = _repository.GetWorkoutByUser(id, userId); 
+            // ✅ Ensure user can only delete their own data
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
+            var existingWorkout = _repository.GetWorkoutByUser(id, userId);
             if (existingWorkout == null)
             {
                 return NotFound(new { message = "Workout entry not found.", workoutId = id, userId });
@@ -131,8 +179,15 @@ namespace GymTime.ApiControllers
         // Retrieve workout statistics
         [HttpGet("user/{userId}/stats")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public ActionResult<object> GetWorkoutStats(int userId)
         {
+            // ✅ Ensure user can only access their own stats
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
             var workouts = _repository.GetWorkoutsByUser(userId).ToList();
             if (!workouts.Any())
             {
@@ -158,9 +213,16 @@ namespace GymTime.ApiControllers
         // Retrieves personal records by exercise for user
         [HttpGet("user/{userId}/records")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public ActionResult<object> GetPersonalRecords(int userId)
         {
-            var workouts = _repository.GetWorkoutsByUser( userId).ToList();
+            // ✅ Ensure user can only access their own records
+            if (!ValidateUserAccess(userId))
+            {
+                return Forbid();
+            }
+
+            var workouts = _repository.GetWorkoutsByUser(userId).ToList();
 
             if (!workouts.Any())
             {
@@ -184,4 +246,3 @@ namespace GymTime.ApiControllers
         }
     }
 }
-
