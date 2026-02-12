@@ -2,32 +2,83 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Login</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <i class="fas fa-dumbbell fa-3x text-primary mb-3"></i>
+                    <h2 class="fw-bold">Welcome Back!</h2>
+                    <p class="text-muted">Login to continue your fitness journey</p>
+                </div>
 
-@if (ViewBag.Error != null)
-{
-    <p style="color:red">@ViewBag.Error</p>
-}
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> @ViewBag.Error
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
 
-<form asp-action="Login" method="post">
-    <div>
-        <label>Email</label><br />
-        <input type="email" name="email" required />
+                <form asp-action="Login" method="post">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </label>
+                        <input type="email" name="email" class="form-control form-control-lg" placeholder="your@email.com" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                    <p class="mb-0">Don't have an account? 
+                        <a asp-action="Register" class="text-decoration-none fw-semibold">
+                            Register here <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <br />
-
-    <div>
-        <label>Password</label><br />
-        <input type="password" name="password" required />
-    </div>
-
-    <br />
-
-    <button type="submit">Login</button>
-</form>
-
-<p>
-    Don't have an account?
-    <a asp-action="Register">Register here</a>
-</p>
+<style>
+    .card {
+        border-radius: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+</style>
+        

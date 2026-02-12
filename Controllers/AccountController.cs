@@ -24,7 +24,7 @@ namespace GymTime.Controllers
         [HttpPost]
         public IActionResult Register(string email, string password)
         {
-            // ✅ ADD THIS: Validate password strength
+           
             var (isValid, errorMessage) = PasswordAuthenticator.ValidatePassword(password);
             if (!isValid)
             {
