@@ -1,4 +1,5 @@
 ﻿using GymTime.Models;
+using GymTime.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
@@ -23,6 +24,14 @@ namespace GymTime.Controllers
         [HttpPost]
         public IActionResult Register(string email, string password)
         {
+            // ✅ ADD THIS: Validate password strength
+            var (isValid, errorMessage) = PasswordAuthenticator.ValidatePassword(password);
+            if (!isValid)
+            {
+                ViewBag.Error = errorMessage;
+                return View();
+            }
+
             // Check if email already exists
             var existingUser = _users.GetByEmail(email);
             if (existingUser != null)

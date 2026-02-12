@@ -1,5 +1,6 @@
 ﻿using GymTime.Models;
 using GymTime.Models.ApiAuth;
+using GymTime.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymTime.ApiControllers
@@ -56,6 +57,13 @@ namespace GymTime.ApiControllers
             if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
             {
                 return BadRequest(new { message = "Email and password are required" });
+            }
+
+            // ✅ ADD THIS: Validate password strength
+            var (isValid, errorMessage) = PasswordAuthenticator.ValidatePassword(request.Password);
+            if (!isValid)
+            {
+                return BadRequest(new { message = errorMessage });
             }
 
             // Check if user already exists
