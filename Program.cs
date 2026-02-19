@@ -1,9 +1,9 @@
 ﻿using GymTime.Models;
 using GymTime.Models.ApiAuth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient; // Changed from MySql.Data.MySqlClient
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text;
 
@@ -62,7 +62,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Adding CORS for API accessing from users
+// Adding CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -71,12 +71,13 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader());
 });
 
-// Register IDbConnection for DI
+// Register IDbConnection for DI - FIXED FOR AZURE SQL
 builder.Services.AddScoped<IDbConnection>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
     var connectionString = configuration.GetConnectionString("DefaultConnection");
-    return new MySqlConnection(connectionString);
+    // Changed MySqlConnection to SqlConnection
+    return new SqlConnection(connectionString);
 });
 
 // Register repositories and services
@@ -84,7 +85,6 @@ builder.Services.AddScoped<IGymRepository, GymRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<JwtServices>();
 
-// Necessary for User accounting (web-based session)
 builder.Services.AddSession();
 
 var app = builder.Build();
@@ -93,15 +93,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
-    // Enable Swagger in Development
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "GymTime API v1");
         options.RoutePrefix = "api-docs";
         options.DocumentTitle = "GymTime API Documentation";
-        options.DisplayRequestDuration();
     });
 }
 else
@@ -112,17 +109,10 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-// CORS
 app.UseCors("AllowAll");
-
-// Authentication & Authorization (ORDER MATTERS!)
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Session for web-based controllers
 app.UseSession();
 
 app.MapControllerRoute(
