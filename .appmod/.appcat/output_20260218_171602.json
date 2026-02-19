@@ -1,0 +1,1312 @@
+{
+  "version": "1.0.0",
+  "producer": ".NET AppCAT CLI",
+  "metadata": {
+    "analysisStartTime": "2026-02-19T01:16:53.2719047Z",
+    "analysisEndTime": "2026-02-19T01:17:11.0168618Z",
+    "privacyMode": "Protected",
+    "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2271074",
+    "targetIds": [
+      "AppService.Windows",
+      "AppService.Linux",
+      "AKS.Linux",
+      "AKS.Windows",
+      "ACA",
+      "AppServiceContainer.Linux",
+      "AppServiceContainer.Windows",
+      "AppServiceManagedInstance.Windows"
+    ],
+    "targetDisplayNames": [
+      "Azure App Service",
+      "Azure Kubernetes Service",
+      "Azure Container Apps",
+      "Azure App Service Container",
+      "Azure App Service Managed Instance"
+    ],
+    "os": [
+      "windows",
+      "linux"
+    ]
+  },
+  "summary": {
+    "totalProjects": 3,
+    "totalIssues": 6,
+    "totalIncidents": 25,
+    "totalEffort": 95,
+    "charts": {
+      "severity": {
+        "mandatory": 0,
+        "optional": 13,
+        "potential": 12,
+        "information": 0
+      },
+      "category": {
+        "Scale": 1,
+        "Connection": 1,
+        "Local": 1,
+        "Security": 21,
+        "Dockerfile": 1
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "%USERPROFILE%\\OneDrive\\Desktop\\Developer Projects\\GymTesting\\GymTesting.csproj",
+      "issues": 0,
+      "storyPoints": 0,
+      "properties": {
+        "appName": "GymTesting",
+        "frameworks": [
+          "net10.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ]
+      },
+      "incidents": []
+    },
+    {
+      "path": "GymTime.csproj",
+      "issues": 5,
+      "storyPoints": 90,
+      "properties": {
+        "appName": "GymTime",
+        "frameworks": [
+          "net10.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "Scale.0001",
+          "incidentId": "f2ca7e87-73e1-4ddb-923a-aa86de771fbf",
+          "location": "GymTime.csproj",
+          "locationKind": "File",
+          "snippet": "Found 35 files matching the rule:\r\n\r\nwwwroot\\css\\site.css\r\nwwwroot\\favicon.ico\r\nwwwroot\\js\\site.js\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css\r\nwwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js\r\nwwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js\r\nwwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js\r\nwwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js\r\nwwwroot\\lib\\jquery-validation\\dist\\additional-methods.js\r\nwwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js\r\nwwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js\r\nwwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js\r\nwwwroot\\lib\\jquery\\dist\\jquery.js\r\nwwwroot\\lib\\jquery\\dist\\jquery.min.js\r\nwwwroot\\lib\\jquery\\dist\\jquery.slim.js\r\nwwwroot\\lib\\jquery\\dist\\jquery.slim.min.js\r\n",
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Connection.0001",
+          "incidentId": "601b0ceb-f564-469a-9e73-6e8b7bbb2191",
+          "location": "appsettings.json",
+          "locationKind": "File",
+          "snippet": "DefaultConnection",
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Local.0006",
+          "incidentId": "e5c5a44a-81f1-4b1c-8a78-cd723570f72d",
+          "location": "Program.cs",
+          "locationKind": "File",
+          "snippet": "https://",
+          "line": 49,
+          "column": 26,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 1,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 1,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "c7035439-e9b4-48d7-b3fe-6ab2ded77c3a",
+          "location": "Program.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.TokenValidationParameters",
+          "line": 22,
+          "column": 44,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "9d991952-1db5-4808-9b8d-7fd4acd0902f",
+          "location": "Program.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SymmetricSecurityKey",
+          "line": 30,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "76599e0c-1e19-4ca3-b499-f2780e7a2f85",
+          "location": "ApiControllers\\ApiAuthController.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 29,
+          "column": 50,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "26af4e35-352a-4af3-a1b9-4ade8b013b8f",
+          "location": "ApiControllers\\ApiAuthController.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 58,
+          "column": 50,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "b2a59575-0f87-402f-aa51-332f4cd0c161",
+          "location": "ApiControllers\\ApiAuthController.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 36,
+          "column": 52,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "7285fcbb-0672-4df3-9dec-e0445e37531d",
+          "location": "Controllers\\AccountController.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 60,
+          "column": 32,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "28cd37d5-c197-4405-9897-76d286038502",
+          "location": "Models\\UserRepository.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 19,
+          "column": 32,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "d92d8b2f-5119-4557-a6ae-28bf47d04bb3",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.TokenValidationParameters",
+          "line": 51,
+          "column": 54,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "6bcca335-471a-47d1-8b4f-6a0715e38c80",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SymmetricSecurityKey",
+          "line": 54,
+          "column": 43,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "be46c511-b579-40eb-b854-5f79ab38fa65",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SecurityToken",
+          "line": 61,
+          "column": 23,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "39373b2f-e3c6-47b6-834e-3a42d29295e3",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SigningCredentials",
+          "line": 21,
+          "column": 12,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "0eaced9d-1638-4e78-a743-cdaea7f56192",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SigningCredentials",
+          "line": 21,
+          "column": 34,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "6a98fd89-8568-48a2-8a38-8a5a79a1d0c7",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SecurityAlgorithms",
+          "line": 21,
+          "column": 66,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "4c6f9df2-8799-4a83-ba89-f1b5cd532cd1",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SymmetricSecurityKey",
+          "line": 20,
+          "column": 12,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0103",
+          "incidentId": "1a6f747c-442c-4488-b06c-98ee2ec4c853",
+          "location": "Models\\ApiAuth\\JwtServices.cs",
+          "locationKind": "File",
+          "snippet": "Microsoft.IdentityModel.Tokens.SymmetricSecurityKey",
+          "line": 20,
+          "column": 34,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "potential"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "ea7abc9f-94c1-449a-9fb5-933d7d2c57bf",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 9,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "69b797be-ad3b-4ed4-b89c-eb21404f4264",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 12,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "bd901d07-3f4d-4adf-b243-16707d5f8ac2",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 18,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "361a6550-cf9a-4233-b5dc-b1e5458c0b77",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 21,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "e57c7fb3-cef8-48c7-9043-61a4d43a27da",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 24,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        },
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "24b928e1-130b-4764-bc40-b87c7bfa08b9",
+          "location": "Models\\Services\\PasswordAuthenticator.cs",
+          "locationKind": "File",
+          "snippet": "password",
+          "line": 15,
+          "column": 31,
+          "targets": {
+            "AppService.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 3,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 3,
+              "severity": "mandatory"
+            }
+          },
+          "labels": []
+        }
+      ]
+    },
+    {
+      "path": ".",
+      "issues": 1,
+      "storyPoints": 5,
+      "properties": {
+        "appName": "",
+        "frameworks": [],
+        "languages": [
+          ""
+        ],
+        "tools": [
+          "MSBuild"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "Dockerfile.0101",
+          "incidentId": "23bc6af2-e121-45da-9a7a-135c07790e57",
+          "location": ".",
+          "locationKind": "file",
+          "message": "File(s) missing",
+          "snippet": "",
+          "targets": {
+            "AppService.Windows": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AppService.Linux": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AKS.Linux": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AKS.Windows": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "ACA": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Linux": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AppServiceContainer.Windows": {
+              "effort": 5,
+              "severity": "optional"
+            },
+            "AppServiceManagedInstance.Windows": {
+              "effort": 5,
+              "severity": "optional"
+            }
+          },
+          "labels": []
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "Scale.0001": {
+      "id": "Scale.0001",
+      "description": "Static content detected.\n\nYour current approach of serving static content directly might lead to increased costs, performance issues, maintenance challenges (requiring application redeployment for content changes), and security risks.\n\nConsider moving static content to Azure Blob Storage and adding Azure CDN.",
+      "title": "Static content detected",
+      "severity": "optional",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Azure Blob Storage",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2250574"
+        },
+        {
+          "title": "Azure CDN",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2250392"
+        }
+      ],
+      "labels": []
+    },
+    "Connection.0001": {
+      "id": "Connection.0001",
+      "description": "Connection string detected. It may not be available when your app is migrated to Azure.\n\nReview and ensure it works from Azure. If you are connecting to a database, you might need to migrate the database to Azure. There are multiple ways to do it:\n    1. Migrate to Azure SQL Database for additional benefits (see the link below).\n    2. Consider Azure SQL Managed Instance if you need features that are not available in Azure SQL Database and you don\u2019t want to use a VM.\n    3. Migrate your database servers directly to SQL Server on Azure VMs.\n\nTo assess database migration effort, you can use Azure Migrate tool, see the link below.",
+      "title": "Connection string is detected",
+      "severity": "potential",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Migrate SQL Server database to Azure",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2251731"
+        },
+        {
+          "title": "Azure SQL Managed Instance",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2251613"
+        },
+        {
+          "title": "Azure Migrate",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2252410"
+        }
+      ],
+      "labels": []
+    },
+    "Local.0006": {
+      "id": "Local.0006",
+      "description": "Your application has hardcoded URLs that might correspond to services that are not accessible on Azure.\n\nReview and ensure that the application is attempting to access URLs that would be available from Azure. You might need to migrate those services to Azure too, this way you will get the benefit of lower latency in the cloud.\n\nIf your application needs to depend on services that run on-premises, you can connect your Azure and local networks with ExpressRoute, Hybrid Connections, or VPN solutions.",
+      "title": "Hardcoded URLs detected",
+      "severity": "potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "ExpressRoute",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250577"
+        },
+        {
+          "title": "Hybrid Connections",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2242588"
+        },
+        {
+          "title": "Connect an on-prem network",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2242591"
+        }
+      ],
+      "labels": []
+    },
+    "Security.0103": {
+      "id": "Security.0103",
+      "description": "Certificate management packages or configurations detected. This may indicate the application is using local or custom certificate handling, which could require adjustments when migrating to Azure. Consider using Azure Key Vault Certificates for secure storage, lifecycle management, and integration with Azure services.",
+      "title": "Certificate management dependency detected",
+      "severity": "potential",
+      "effort": 5,
+      "links": [
+        {
+          "title": "About Azure Key Vault certificates",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2335741"
+        }
+      ],
+      "labels": []
+    },
+    "Security.0003": {
+      "id": "Security.0003",
+      "description": "Hardcoded sensitive data detected.\n\nIf you are targeting Managed Instance on Azure App Service, externalize secrets to Key Vault/App Configuration; use managed identity instead of passwords or embedded connection strings.\n\nWhile if targeting other Azure compute services:\n\nAvoid placing sensitive data such as passwords, ids, tokens etc., directly in config files and code since it compromises the security of your application.\n\nUse Azure App Configuration or Azure KeyVault to store secrets.",
+      "title": "Hardcoded sensitive data detected",
+      "severity": "optional",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Centralized app configuration and security",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250733"
+        }
+      ],
+      "labels": []
+    },
+    "Dockerfile.0101": {
+      "id": "Dockerfile.0101",
+      "description": "Ensure Dockerfile exists in the repository",
+      "title": "Dockerfile Missing",
+      "severity": "optional",
+      "effort": 5,
+      "links": [
+        {
+          "title": "docker",
+          "url": "https://docker.com"
+        }
+      ],
+      "labels": [
+        "domain=cloud-readiness",
+        "category=docker-containerization"
+      ]
+    }
+  }
+}
