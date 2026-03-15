@@ -63,7 +63,8 @@ namespace GymTime.Controllers
             }
 
             HttpContext.Session.SetInt32("UserId", user.ID);
-            return RedirectToAction("Index", "Home");
+            // After successful login redirect the user to the dashboard (Gym controller Index)
+            return RedirectToAction("Index", "Gym");
         }
 
         // GET: /Account/Logout
