@@ -2,219 +2,142 @@
 
 @{
     ViewData["Title"] = "Dashboard";
-    }
+}
 
-<div class="dashboard-header text-center mb-5">
-    <h1 class="display-4 fw-bold">
-        <i class="fas fa-chart-line text-primary"></i> Your Fitness Dashboard
-    </h1>
-    <p class="lead text-muted">Track your nutrition and workouts in real-time</p>
-</div>
+<h2 class="mb-4">Dashboard</h2>
 
-<!-- Macro Tracker Card -->
-<div class="card shadow-sm border-0 mb-5">
-    <div class="card-body p-4">
-        <h3 class="card-title text-center mb-4">
-            <i class="fas fa-heartbeat text-danger"></i> Daily Macro Tracker
-        </h3>
-        
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <div style="max-width: 400px; margin: 0 auto;">
-                    <canvas id="heartChart"></canvas>
-                </div>
+<!-- Macro Tracker -->
+<div class="p-3 mb-4" style="background:var(--gt-surface);border:1px solid var(--gt-border);border-radius:6px;">
+    <h5 class="mb-3">Macros</h5>
+    <div class="row align-items-center">
+        <div class="col-md-5">
+            <div style="max-width:280px;margin:0 auto;">
+                <canvas id="heartChart"></canvas>
             </div>
-            <div class="col-md-6">
-                <div class="macro-stats">
-                    <div class="stat-item mb-3 p-3 bg-light rounded">
-                        <i class="fas fa-drumstick-bite text-danger"></i>
-                        <strong>Proteins:</strong> <span id="totalProteins" class="fs-4 text-danger">0</span>g
-                    </div>
-                    <div class="stat-item mb-3 p-3 bg-light rounded">
-                        <i class="fas fa-bread-slice text-primary"></i>
-                        <strong>Carbs:</strong> <span id="totalCarbs" class="fs-4 text-primary">0</span>g
-                    </div>
-                    <div class="stat-item mb-3 p-3 bg-light rounded">
-                        <i class="fas fa-cheese text-warning"></i>
-                        <strong>Fats:</strong> <span id="totalFats" class="fs-4 text-warning">0</span>g
-                    </div>
-                    <div class="stat-item p-3 bg-light rounded">
-                        <i class="fas fa-fire text-success"></i>
-                        <strong>Calories:</strong> <span id="totalCalories" class="fs-4 text-success">0</span> kcal
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="col-md-7">
+            <table class="table table-sm table-borderless mb-0" style="color:var(--gt-text);">
+                <tr><td>Protein</td><td class="text-end"><span id="totalProteins">0</span> g</td></tr>
+                <tr><td>Carbs</td><td class="text-end"><span id="totalCarbs">0</span> g</td></tr>
+                <tr><td>Fat</td><td class="text-end"><span id="totalFats">0</span> g</td></tr>
+                <tr><td>Calories</td><td class="text-end"><span id="totalCalories">0</span> kcal</td></tr>
+            </table>
         </div>
     </div>
 </div>
 
 <!-- Diet Section -->
-<div class="card shadow-sm border-0 mb-5">
-    <div class="card-header bg-primary text-white py-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">
-                <i class="fas fa-utensils"></i> Diet Logger
-            </h4>
-            <a href="/Gym/InsertDiet/" class="btn btn-light btn-sm">
-                <i class="fas fa-plus"></i> Add Food
-            </a>
-        </div>
-    </div>
-    <div class="card-body">
-        @if (Model.Diets.Any())
-        {
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0">Diet</h5>
+    <a href="/Gym/InsertDiet/" class="btn btn-sm btn-outline-light">+ Add food</a>
+</div>
+<div class="p-3 mb-4" style="background:var(--gt-surface);border:1px solid var(--gt-border);border-radius:6px;">
+    @if (Model.Diets.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-sm mb-0" style="color:var(--gt-text);">
+                <thead>
+                    <tr>
+                        <th>Food</th>
+                        <th>Protein</th>
+                        <th>Fat</th>
+                        <th>Carbs</th>
+                        <th>Calories</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var diet in Model.Diets)
+                    {
                         <tr>
-                            <th><i class="fas fa-hashtag"></i> ID</th>
-                            <th><i class="fas fa-apple-alt"></i> Food Name</th>
-                            <th><i class="fas fa-drumstick-bite"></i> Protein</th>
-                            <th><i class="fas fa-cheese"></i> Fats</th>
-                            <th><i class="fas fa-bread-slice"></i> Carbs</th>
-                            <th><i class="fas fa-fire"></i> Calories</th>
-                            <th>Actions</th>
+                            <td>@diet.FoodName</td>
+                            <td>@diet.Proteins g</td>
+                            <td>@diet.Fats g</td>
+                            <td>@diet.Carbohydrates g</td>
+                            <td>@diet.Calories kcal</td>
+                            <td><a href="/Gym/ViewDiet/@diet.Id" class="btn btn-sm btn-outline-secondary">View</a></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var diet in Model.Diets)
-                        {
-                            <tr>
-                                <td><a href="/Gym/ViewDiet/@diet.Id" class="text-decoration-none">@diet.Id</a></td>
-                                <td class="fw-semibold">@diet.FoodName</td>
-                                <td>@diet.Proteins g</td>
-                                <td>@diet.Fats g</td>
-                                <td>@diet.Carbohydrates g</td>
-                                <td>@diet.Calories kcal</td>
-                                <td>
-                                    <a href="/Gym/ViewDiet/@diet.Id" class="btn btn-sm btn-outline-primary" title="View">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <div class="text-center py-5">
-                <i class="fas fa-utensils fa-3x text-muted mb-3"></i>
-                <p class="text-muted">No diet entries yet. Start tracking your nutrition!</p>
-                <a href="/Gym/InsertDiet/" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Add Your First Meal
-                </a>
-            </div>
-        }
-    </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted mb-0">No diet entries yet. <a href="/Gym/InsertDiet/">Add one</a>.</p>
+    }
 </div>
 
 <!-- Workout Section -->
-<div class="card shadow-sm border-0 mb-5">
-    <div class="card-header bg-success text-white py-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">
-                <i class="fas fa-dumbbell"></i> Workout Logger
-            </h4>
-            <a href="/Gym/InsertWorkout/" class="btn btn-light btn-sm">
-                <i class="fas fa-plus"></i> Add Workout
-            </a>
-        </div>
-    </div>
-    <div class="card-body">
-        @if (Model.Workouts.Any())
-        {
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0">Workouts</h5>
+    <a href="/Gym/InsertWorkout/" class="btn btn-sm btn-outline-light">+ Add workout</a>
+</div>
+<div class="p-3 mb-4" style="background:var(--gt-surface);border:1px solid var(--gt-border);border-radius:6px;">
+    @if (Model.Workouts.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-sm mb-0" style="color:var(--gt-text);">
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Reps</th>
+                        <th>Sets</th>
+                        <th>PR</th>
+                        <th>Notes</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var w in Model.Workouts)
+                    {
                         <tr>
-                            <th><i class="fas fa-hashtag"></i> ID</th>
-                            <th><i class="fas fa-running"></i> Workout Name</th>
-                            <th><i class="fas fa-redo"></i> Reps</th>
-                            <th><i class="fas fa-layer-group"></i> Sets</th>
-                            <th><i class="fas fa-trophy"></i> PR</th>
-                            <th><i class="fas fa-comment"></i> Description</th>
-                            <th>Actions</th>
+                            <td>@w.WorkoutName</td>
+                            <td>@w.Reps</td>
+                            <td>@w.Sets</td>
+                            <td>@w.PersonalRecord lbs</td>
+                            <td>@w.Description</td>
+                            <td><a href="/Gym/ViewWorkout/@w.Id" class="btn btn-sm btn-outline-secondary">View</a></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var workout in Model.Workouts)
-                        {
-                            <tr>
-                                <td><a href="/Gym/ViewWorkout/@workout.Id" class="text-decoration-none">@workout.Id</a></td>
-                                <td class="fw-semibold">@workout.WorkoutName</td>
-                                <td>@workout.Reps</td>
-                                <td>@workout.Sets</td>
-                                <td><span class="badge bg-warning text-dark">@workout.PersonalRecord lbs</span></td>
-                                <td>@workout.Description</td>
-                                <td>
-                                    <a href="/Gym/ViewWorkout/@workout.Id" class="btn btn-sm btn-outline-success" title="View">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <div class="text-center py-5">
-                <i class="fas fa-dumbbell fa-3x text-muted mb-3"></i>
-                <p class="text-muted">No workouts logged yet. Time to hit the gym!</p>
-                <a href="/Gym/InsertWorkout/" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Log Your First Workout
-                </a>
-            </div>
-        }
-    </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted mb-0">No workouts yet. <a href="/Gym/InsertWorkout/">Log one</a>.</p>
+    }
 </div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Fetch macro data and update chart
         fetch('/Gym/GetMacroData')
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
                 document.getElementById('totalProteins').innerText = data.totalProteins;
                 document.getElementById('totalCarbs').innerText = data.totalCarbs;
                 document.getElementById('totalFats').innerText = data.totalFats;
                 document.getElementById('totalCalories').innerText = data.totalCalories;
 
-                const ctx = document.getElementById('heartChart').getContext('2d');
-                new Chart(ctx, {
+                new Chart(document.getElementById('heartChart'), {
                     type: 'doughnut',
                     data: {
-                        labels: ['Proteins', 'Carbs', 'Fats'],
+                        labels: ['Protein', 'Carbs', 'Fat'],
                         datasets: [{
                             data: [data.totalProteins, data.totalCarbs, data.totalFats],
-                            backgroundColor: ['#ff6384', '#36a2eb', '#ffce56'],
-                            borderWidth: 3,
-                            borderColor: '#fff'
+                            backgroundColor: ['#e05263', '#4ea8de', '#e6c74c'],
+                            borderWidth: 0
                         }]
                     },
                     options: {
+                        cutout: '60%',
                         responsive: true,
                         plugins: {
                             legend: {
                                 position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    font: {
-                                        size: 14,
-                                        family: 'Poppins'
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        return context.label + ': ' + context.parsed + 'g';
-                                    }
-                                }
+                                labels: { color: '#ccc', padding: 12, font: { size: 13 } }
                             }
                         }
                     }
@@ -222,28 +145,3 @@
             });
     </script>
 }
-
-<style>
-    .stat-item {
-        transition: all 0.3s ease;
-    }
-    
-    .stat-item:hover {
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    
-    .table-hover tbody tr:hover {
-        background-color: rgba(102, 126, 234, 0.05);
-        cursor: pointer;
-    }
-    
-    .card {
-        border-radius: 15px;
-        overflow: hidden;
-    }
-    
-    .card-header {
-        border-radius: 15px 15px 0 0 !important;
-    }
-</style>
